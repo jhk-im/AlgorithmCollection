@@ -1,4 +1,4 @@
-package hash
+package hash.test1
 
 class HashCodingTest1 {
 
