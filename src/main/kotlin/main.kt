@@ -1,21 +1,13 @@
-import hash.test1.HashCodingTest1
+import hash.test2.HashCodingTest2
 
-val hash1 by lazy { HashCodingTest1() }
-val participant = arrayOf("kjh", "yhh", "lmj", "kkh", "pcs", "hsd", "yhh")
-val completion = arrayOf("kjh", "lmj", "kkh", "pcs", "hsd","yhh")
+val hash2 by lazy { HashCodingTest2() }
+
+val phoneBook1 = arrayOf("119", "97674223", "1195524421")
+val phoneBook2 = arrayOf("123", "456", "789")
+val phoneBook3 = arrayOf("12","123","1235","567","88")
 
 fun main(args: Array<String>) {
-    println(hash1.solution(participant, completion))
-
-    val s1 = "string"
-    val s2 = "string"
-    println(s1.hashCode()) // -891985903
-    println(s2.hashCode()) // -891985903
-    println(s1==s2) // true
-
-    val hashMap = HashMap<String, Int>()
-    hashMap["s1"] = 1
-    hashMap["s2"] = 3
-    hashMap["s2"] = 2
-    println(hashMap)
+    println(hash2.solution(phoneBook1))
+    println(hash2.solution(phoneBook2))
+    println(hash2.solution(phoneBook3))
 }
