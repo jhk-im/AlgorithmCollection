@@ -8,7 +8,7 @@
 
 ## 프로그래머스 코딩 테스트
 [Programmers - Hash](https://programmers.co.kr/learn/courses/30/parts/12077)    
-[Blog : Kotlin algorithm - Hash (2)](https://jroomstudio.tistory.com/77)
+[Blog : Kotlin algorithm - Hash (2)](https://jroomstudio.tistory.com/79)
 
 ```
 * 문제 설명

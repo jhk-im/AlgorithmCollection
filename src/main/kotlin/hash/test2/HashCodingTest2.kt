@@ -10,8 +10,8 @@ class HashCodingTest2 {
         }
         for (key in hashMap.keys) {
             for (i in key.indices) {
+                println(key.substring(0, i))
                 if (hashMap.containsKey(key.substring(0, i))) return false
-                if (hashMap[key.substring(0, i)] != null) return false
             }
         }
         return true
