@@ -18,7 +18,7 @@ public class Main {
         // 각 노드 방문 정보
         boolean[] visited = new boolean[8];
 
-        // dfs 호출
+        // bfs 호출
         bfs(graph, visited); // 1 2 3 6 7 4 5
     }
 
