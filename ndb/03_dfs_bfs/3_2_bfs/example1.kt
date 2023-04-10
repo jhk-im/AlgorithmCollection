@@ -6,7 +6,7 @@ fun main(args: Array<String>) {
         intArrayOf(6, 7),
         intArrayOf(4, 5),
         intArrayOf(3, 5),
-        intArrayOf(3, 4),
+        intArrayOf(4, 5),
         intArrayOf(2),
         intArrayOf(2)
     )
