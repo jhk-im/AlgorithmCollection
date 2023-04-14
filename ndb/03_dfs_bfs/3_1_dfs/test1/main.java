@@ -1,35 +1,78 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
 public class Main {
-    public static void main(String[] args) {
-        // 각 노드가 연결된 정보를 2차원 배열로 표현
-        int[][] graph = {
-                {},
-                {2, 3},
-                {6, 7},
-                {4, 5},
-                {3, 5},
-                {3, 4},
-                {2},
-                {2}
-        };
 
-        // 각 노드 방문 정보
-        boolean[] visited = new boolean[8];
+    static int n = 0;
+    static int m = 0;
+    static int[][] graph;
 
-        // dfs 호출
-        dfs(graph, 1, visited); // 1 2 6 7 3 4 5 
+    static boolean dfs(int c, int r) {
+        // 주어진 범위를 벗어나는 경우 즉시 종료
+        if (c <= -1 || c >= n || r <= -1 || r >= m) {
+            return false;
+        }
+
+        // 현재 노드를 방문하지 않은 경우
+        if (graph[c][r] == 0) {
+            // 해당 노드 방문 처리
+            graph[c][r] = 1;
+
+            // 상, 하, 좌, 우 재귀 호출
+            dfs(c - 1, r); // 상
+            dfs(c + 1, r); // 하
+            dfs(c, r - 1); // 좌
+            dfs(c, r + 1); // 우
+
+            return true;
+        }
+
+        return false;
     }
 
-    // DFS 메서드 정의
-    private static void dfs(int[][] graph, int v, boolean[] visited) {
-        // 현재 노드 방문 체크
-        visited[v] = true;
-        System.out.print(v + " ");
+    public static void main(String[] args) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            // n, m 공백 구분하여 입력 받기
+            String[] input = br.readLine().split(" ");
+            n = Integer.parseInt(input[0]);
+            m = Integer.parseInt(input[1]);
 
-        // 현재 노드의 인접 노드 재귀적 방문
-        for(int i : graph[v]) {
-            if (!visited[i]) {
-                dfs(graph, i, visited);
+            // 2차원 리스트 맵 정보 이력 받기
+            int[][] array = new int[n][m]; // 배열 A
+            for (int i = 0; i < n; i++) {
+                BufferedReader br2 = new BufferedReader(new InputStreamReader(System.in));
+                String[] input2 = br2.readLine().split("");
+                int[] intArray = new int[m];
+                int count = 0;
+                for (String s : input2) {
+                    if (s.length() > 0) {
+                        intArray[count] = Integer.parseInt(s);
+                        count++;
+                    }
+                }
+                array[i] = intArray;
+                //System.out.println(Arrays.toString(intArray));
             }
+
+            graph = array;
+
+            // 모든 노드에 대하여 음료수 채우기
+            var result = 0;
+            for (int i = 0; i < n; i++) {
+                for(int j = 0; j < m; j++) {
+                    // 현재 위치에서 dfs 수행
+                    if (dfs(i, j)) {
+                        result += 1;
+                    }
+                }
+            }
+
+            System.out.println(result); // 정답 출력
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
