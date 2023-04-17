@@ -24,6 +24,7 @@ void main(List<String> arguments) {
   }
 }
 
+// 재귀함수 활용한 이진 탐색
 int? binarySearch(List<int> array, int target, int start, int end) {
   if (start > end) {
     return null;
@@ -39,4 +40,22 @@ int? binarySearch(List<int> array, int target, int start, int end) {
     // 중간점 보다 찾는 원소가 큰 경우 오른쪽 확인
     return binarySearch(array, target, mid.toInt() + 1, end);
   }
+}
+
+// 반복문 활용한 이진 탐색
+int? binarySearchWithWhile(List<int> array, int target, int start, int end) {
+  while (start <= end) {
+    var mid = (start + end) ~/ 2;
+    if (array[mid] == target) {
+      // 중간점 인덱스가 찾는 원소인 경우 반환
+      return mid;
+    } else if (array[mid] > target) {
+      // 중간점 보다 찾는 원소가 작은 경우 왼쪽 확인
+      end = mid - 1;
+    } else {
+      // 중간점 보다 찾는 원소가 큰 경우 오른쪽 확인
+      start = mid + 1;
+    }
+  }
+  return null;
 }
