@@ -100,7 +100,6 @@ public class Main {
             int count = 0;
             // 도달 가능한 노드 중 가장 멀리 있는 노드와의 최단 거리
             int maxDistance = 0;
-
             for (int d : distance) {
                 // 도달 가능한 노드
                 if (d != INF) {
