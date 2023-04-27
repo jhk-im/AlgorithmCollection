@@ -1,101 +1,91 @@
 import 'dart:collection';
 import 'dart:io';
 
-// 특정 원소가 속한 집합 찾기
-int findParent(List<int> parent, int x) {
-  // 루트 노드가 아니라면, 루트 노드를 찾을 때 까지 재귀 호출
-  /*if (parent[x] != x) {
-    return findParent(parent, parent[x]);
-  }
-  return x;*/
-  // 경로 압축기법 사용
-  if (parent[x] != x) {
-    parent[x] = findParent(parent, parent[x]);
-  }
-  return parent[x];
-}
-
-// 두 원소가 속한 집합 찾기
-void unionParent(List<int> parent, int a, int b) {
-  a = findParent(parent, a);
-  b = findParent(parent, b);
-  if (a < b) {
-    parent[b] = a;
-  } else {
-    parent[a] = b;
-  }
-}
-
 void main(List<String> arguments) {
-  // v(노드 개수), e(간선 = union 연산) 공백 구분하여 입력 받기
+  // v(노드 개수), e(간선) 공백 구분하여 입력 받기
   var input1 = stdin.readLineSync()?.split(" ");
   if (input1 != null) {
     int v = int.parse(input1[0]);
     int e = int.parse(input1[1]);
-    // 부모를 테이블 생성
-    List<int> parent = [];
-    // 부모를 자기 자신으로 초기화
+    // 모든 노드에 대한 진입차수 0으로 초기화
+    List<int> indegree = List.filled(v + 1, 0);
+    // 각 노드에 연결된 간선 정보를 담기 위한 연결리스트(그래프) 초기화
+    List<List<int>> graph = [];
     for (int i = 0; i < v + 1; i++) {
-      parent.add(i);
+      graph.add([]);
     }
-
-    // 모든 간선을 담을 map, 최종비용
-    Map<int, List<int>> hashMap = HashMap();
-    int result = 0;
-    // 간선 정보 입력받기
+    // 방향 그래프의 간선 정보 입력받기
     for (int i = 0; i < e; i++) {
       var input = stdin.readLineSync()?.split(" ");
       if (input != null) {
         int a = int.parse(input[0]);
         int b = int.parse(input[1]);
-        int cost = int.parse(input[2]);
-        hashMap[cost] = [a, b];
+        // 정점 A에서 B로 이동 가능
+        graph[a].add(b);
+        // 진입차수 1 증가
+        indegree[b] += 1;
       }
     }
-    // 모든 간선을 담은 리스트
-    List<MapEntry<int, List<int>>> edges = [];
-    edges.addAll(hashMap.entries);
-    // 간선을 비용순으로 정렬
-    edges.sort((a, b) => a.key.compareTo(b.key));
-    // 간선을 하나씩 확인
-    for (MapEntry<int, List<int>> edge in edges.toList()) {
-      int cost = edge.key;
-      int a = edge.value[0];
-      int b = edge.value[1];
-      // 사이클이 발생하지 않은 경우 집합에 포함
-      if (findParent(parent, a) != findParent(parent, b)) {
-        print("Cycle O");
-        unionParent(parent, a, b);
-        result += cost;
-      } else {
-        print("Cycle X");
+    print("graph");
+    print(graph);
+    print("indegree");
+    print(indegree);
+    // 위상 정렬
+    List<int> result = [];
+    // Queue 구현을 위한 라이브러리 사용
+    final queue = Queue<int>();
+    // 처음 시작할 때 진입차수가 0인 노드 큐에삽입
+    for (int i = 1; i < v + 1; i++) {
+      if (indegree[i] == 0) {
+        queue.addFirst(i);
       }
-      print('cost,a,b=$cost,$a,$b');
+    }
+    // 큐가 빌때까지 반복
+    while (queue.isNotEmpty) {
+      // 큐에서 원소 꺼내기
+      int now = queue.removeLast();
+      result.add(now);
+      print("pop");
+      print(now);
+      for (int i in graph[now]) {
+        // 해당 원소와 연결된 노드의 진입차수 1 빼기
+        indegree[i] -= 1;
+        // 진입차수가 0이 되는 노드 큐에 삽입
+        if (indegree[i] == 0) {
+          queue.addFirst(i);
+        }
+      }
     }
     // 결과 출력
+    print("result");
     print(result);
   }
 }
 
 /*
 입력
-4 5
-1 2 23
-1 3 25
-1 4 32
-2 3 13
-3 4 12
-
+5 6
+1 2
+2 3
+3 4
+2 5
+1 5
+5 4
 출력
-Cycle O
-cost,a,b=12,3,4
-Cycle O
-cost,a,b=13,2,3
-Cycle O
-cost,a,b=23,1,2
-Cycle X
-cost,a,b=25,1,3
-Cycle X
-cost,a,b=32,1,4
-48
+graph
+[[], [2, 5], [3, 5], [4], [], [4]]
+indegree
+[0, 0, 1, 1, 2, 2]
+pop
+1
+pop
+2
+pop
+3
+pop
+5
+pop
+4
+result
+[1, 2, 3, 5, 4]
 */
