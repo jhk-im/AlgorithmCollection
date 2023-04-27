@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:io';
 
 // 특정 원소가 속한 집합 찾기
@@ -38,9 +37,8 @@ void main(List<String> arguments) {
     for (int i = 0; i < v + 1; i++) {
       parent.add(i);
     }
-
-    // 모든 간선을 담을 map, 최종비용
-    Map<int, List<int>> hashMap = HashMap();
+    // 모든 간선을 담을 리스트, 최종비용
+    List<List<int>> edges = [];
     int result = 0;
     // 간선 정보 입력받기
     for (int i = 0; i < e; i++) {
@@ -49,26 +47,26 @@ void main(List<String> arguments) {
         int a = int.parse(input[0]);
         int b = int.parse(input[1]);
         int cost = int.parse(input[2]);
-        hashMap[cost] = [a, b];
+        // 비용순으로 정렬하기 위해 key 를 원소 비용으로 설정
+        List<int> list = [cost, a, b];
+        edges.add(list);
       }
     }
-    // 모든 간선을 담은 리스트
-    List<MapEntry<int, List<int>>> edges = [];
-    edges.addAll(hashMap.entries);
     // 간선을 비용순으로 정렬
-    edges.sort((a, b) => a.key.compareTo(b.key));
+    edges.sort((a, b) => a[0].compareTo(b[0]));
+    print(edges);
     // 간선을 하나씩 확인
-    for (MapEntry<int, List<int>> edge in edges.toList()) {
-      int cost = edge.key;
-      int a = edge.value[0];
-      int b = edge.value[1];
+    for (List<int> edge in edges) {
+      int cost = edge[0];
+      int a = edge[1];
+      int b = edge[2];
       // 사이클이 발생하지 않은 경우 집합에 포함
       if (findParent(parent, a) != findParent(parent, b)) {
-        print("Cycle O");
+        print('---NoCycle---');
         unionParent(parent, a, b);
         result += cost;
       } else {
-        print("Cycle X");
+        print('---Cycle---');
       }
       print('cost,a,b=$cost,$a,$b');
     }
@@ -87,15 +85,16 @@ void main(List<String> arguments) {
 3 4 12
 
 출력
-Cycle O
+[[12, 3, 4], [13, 2, 3], [23, 1, 2], [25, 1, 3], [32, 1, 4]]
+---NoCycle---
 cost,a,b=12,3,4
-Cycle O
+---NoCycle---
 cost,a,b=13,2,3
-Cycle O
+---NoCycle---
 cost,a,b=23,1,2
-Cycle X
+---Cycle---
 cost,a,b=25,1,3
-Cycle X
+---Cycle---
 cost,a,b=32,1,4
 48
 */

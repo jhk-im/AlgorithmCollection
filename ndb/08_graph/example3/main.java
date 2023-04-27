@@ -37,8 +37,8 @@ public class Main {
             for (int i = 0; i < v + 1; i++) {
                 parent[i] = i;
             }
-            // 모든 간선을 담을 map, 최종비용
-            Map<Integer, int[]> hashMap = new HashMap<>();
+            // 모든 간선을 담을 리스트, 최종비용
+            List<int[]> edges = new ArrayList<>();
             int result = 0;
             // 간선 정보 입력받기
             for (int i = 0; i < e; i++) {
@@ -46,25 +46,35 @@ public class Main {
                 int a = Integer.parseInt(input2[0]);
                 int b = Integer.parseInt(input2[1]);
                 int cost = Integer.parseInt(input2[2]);
-                int[] ab = {a, b};
-                hashMap.put(cost, ab);
+                // 비용순으로 정렬하기 위해 key 를 원소 비용으로 설정
+                int[] list = {cost, a, b};
+                edges.add(list);
             }
-            // 모든 간선을 담은 리스트
-            List<Map.Entry<Integer, int[]>> edges = new ArrayList<>(hashMap.entrySet());
             // 간선을 비용순으로 정렬
-            edges.sort(Map.Entry.comparingByKey());
+            edges.sort((o1, o2) -> {
+                if (o1[0] > o2[0]) {
+                    return 1;
+                } else if (o1[0] < o2[0])  {
+                    return -1;
+                }
+                return 0;
+            });
+            for (int[] edge : edges) {
+                System.out.print(Arrays.toString(edge) + ", ");
+            }
+            System.out.println(" ");
             // 간선을 하나씩 확인
-            for (Map.Entry<Integer, int[]> edge : edges.stream().toList()) {
-                int cost = edge.getKey();
-                int a = edge.getValue()[0];
-                int b = edge.getValue()[1];
+            for (int[] edge : edges) {
+                int cost = edge[0];
+                int a = edge[1];
+                int b = edge[2];
                 // 사이클이 발생하지 않은 경우 집합에 포함
                 if (findParent(parent, a) != findParent(parent, b)) {
-                    System.out.println("Cycle O");
+                    System.out.println("---NoCycle---");
                     unionParent(parent, a, b);
                     result += cost;
                 } else {
-                    System.out.println("Cycle X");
+                    System.out.println("---Cycle---");
                 }
                 System.out.println("cost,a,b=" + cost+ "," + a + "," + b);
             }
@@ -86,15 +96,16 @@ public class Main {
 3 4 12
 
 출력
-Cycle O
+[12, 3, 4], [13, 2, 3], [23, 1, 2], [25, 1, 3], [32, 1, 4],
+---NoCycle---
 cost,a,b=12,3,4
-Cycle O
+---NoCycle---
 cost,a,b=13,2,3
-Cycle O
+---NoCycle---
 cost,a,b=23,1,2
-Cycle X
+---Cycle---
 cost,a,b=25,1,3
-Cycle X
+---Cycle---
 cost,a,b=32,1,4
 48
 */
