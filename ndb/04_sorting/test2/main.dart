@@ -35,3 +35,13 @@ void main(List<String> arguments) {
     }
   }
 }
+/*
+입력
+2
+김코딩 49
+이자바 92
+
+출력
+김코딩
+이자바 
+*/

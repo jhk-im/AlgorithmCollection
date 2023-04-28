@@ -16,6 +16,8 @@
 
 > DFS와 마찬가지로 가장 숫자가 작은 노드부터 먼저 삽입한다고 가정한다.
 
+### [example1](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/04_sorting/%08example1)
+
 ```txt
 1. 시작 노드 Push(1)
 ```

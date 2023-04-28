@@ -25,6 +25,9 @@ void main(List<String> arguments) {
     }
     b.sort((a, b) => b.compareTo(a)); // 배열 B 내림차순 정렬
 
+    print('a => $a');
+    print('b => $b');
+
     // 첫 번째 인덱스부터 확인하여 두 배열의 원소를 최대 K번 비교
     for (int i = 0; i < k; i++) {
       // A 원소가 B의 원소보다 작은 경우
@@ -32,6 +35,9 @@ void main(List<String> arguments) {
         int temp = a[i];
         a[i] = b[i];
         b[i] = temp;
+        print('원소 교체');
+        print('a => $a');
+        print('b => $b');
       } else {
         break;
       }
@@ -40,3 +46,23 @@ void main(List<String> arguments) {
     print(a.reduce((value, element) => value + element)); // 배열 A의 모든 원소 합 출력
   }
 }
+/*
+입력
+5 3
+1 2 5 4 3
+5 5 6 6 5
+
+출력
+a => [1, 2, 3, 4, 5]
+b => [6, 6, 5, 5, 5]
+원소 교체
+a => [6, 2, 3, 4, 5]
+b => [1, 6, 5, 5, 5]
+원소 교체
+a => [6, 6, 3, 4, 5]
+b => [1, 2, 5, 5, 5]
+원소 교체
+a => [6, 6, 5, 4, 5]
+b => [1, 2, 3, 5, 5]
+26
+*/

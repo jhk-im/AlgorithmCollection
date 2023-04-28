@@ -19,6 +19,7 @@ public class Main {
                 a[i] = Integer.parseInt(input2[i]);
             }
             Arrays.sort(a); // 베열 A 오름차순 정렬
+            System.out.println("a => " + Arrays.toString(a));
 
             Integer[] b = new Integer[n]; // 배열 B
             BufferedReader br3 = new BufferedReader(new InputStreamReader(System.in));
@@ -27,6 +28,7 @@ public class Main {
                 b[i] = Integer.parseInt(input3[i]);
             }
             Arrays.sort(b, Collections.reverseOrder()); // 배열 B 내림차순 정렬
+            System.out.println("b => " + Arrays.toString(b));
 
             // 첫 번째 인덱스부터 확인하여 두 배열의 원소를 최대 K번 비교
             for (int i = 0; i < k; i++) {
@@ -35,6 +37,9 @@ public class Main {
                     int temp = a[i];
                     a[i] = b[i];
                     b[i] = temp;
+                    System.out.println("원소 교체");
+                    System.out.println("a => " + Arrays.toString(a));
+                    System.out.println("b => " + Arrays.toString(b));
                 } else {
                     break;
                 }
@@ -46,3 +51,23 @@ public class Main {
         }
     }
 }
+/*
+입력
+5 3
+1 2 5 4 3
+5 5 6 6 5
+
+출력
+a => [1, 2, 3, 4, 5]
+b => [6, 6, 5, 5, 5]
+원소 교체
+a => [6, 2, 3, 4, 5]
+b => [1, 6, 5, 5, 5]
+원소 교체
+a => [6, 6, 3, 4, 5]
+b => [1, 2, 5, 5, 5]
+원소 교체
+a => [6, 6, 5, 4, 5]
+b => [1, 2, 3, 5, 5]
+26
+*/

@@ -24,3 +24,16 @@ void main(List<String> arguments) {
     }
   }
 }
+
+/*
+입력
+3
+48
+29
+81
+
+출력
+81 
+48 
+29 
+*/
