@@ -35,21 +35,21 @@ void main(List<String> arguments) {
     m = int.parse(input1[1]);
 
     // 2차원 리스트 맵 정보 입력 받기
-    var array = <List<int>>[];
+    //var array = <List<int>>[];
     for (int i = 0; i < n; i++) {
       var input2 = stdin.readLineSync()?.split("");
       if (input2 != null) {
         var intArray = <int>[];
         for (int j = 0; j < input2.length; j++) {
-          if (input2[j].length > 0) {
+          if (input2[j].isNotEmpty) {
             intArray.add(int.parse(input2[j]));
           }
         }
-        array.add(intArray);
+        graph.add(intArray);
       }
     }
 
-    graph = array;
+    print(graph);
 
     // 모든 노드에 대하여 음료수 채우기
     var result = 0;
@@ -58,6 +58,7 @@ void main(List<String> arguments) {
         // 현재 위치에서 dfs 수행
         if (dfs(i, j)) {
           result += 1;
+          print('i=$i, j=$j ->  $graph');
         }
       }
     }
@@ -65,3 +66,17 @@ void main(List<String> arguments) {
     print(result); // 정답 출력
   }
 }
+/*
+입력
+3 3
+010
+101
+000
+
+출력
+[[0, 1, 0], [1, 0, 1], [0, 0, 0]]
+i=0, j=0 ->  [[1, 1, 0], [1, 0, 1], [0, 0, 0]]
+i=0, j=2 ->  [[1, 1, 1], [1, 0, 1], [0, 0, 0]]
+i=1, j=1 ->  [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+3
+*/
