@@ -48,6 +48,12 @@ void main(List<String> arguments) {
       var count = (M / (K + 1) * K).toInt();
       count += M % (K + 1);
 
+      print('가장 큰 수 = $first');
+      print('두번째 큰 수 = $second');
+      print('반복되는 수열의 길이 = ${K + 1}');
+      print('수열이 반복되는 횟수 = ${M / (K + 1)}');
+      print('가장 큰 수 등장 횟수 = $count');
+
       result += (count * first); // 가장 큰 수 더하기
       result += (M - count) * second; // 두 번째로 큰 수 더하기
 
@@ -55,3 +61,16 @@ void main(List<String> arguments) {
     }
   }
 }
+/*
+입력
+5 8 3
+2 4 5 4 6
+
+출력
+가장 큰 수 = 6
+두번째 큰 수 = 5
+반복되는 수열의 길이 = 4
+수열이 반복되는 횟수 = 2.0
+가장 큰 수 등장 횟수 = 6
+46
+*/
