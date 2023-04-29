@@ -9,10 +9,7 @@ void main(List<String> arguments) {
     // 가게에 있는 전체 부품 번호 공백 구분하여 입력
     var input2 = stdin.readLineSync()?.split(' ');
     if (input2 != null) {
-      var nArray = <int>[];
-      for (String s in input2) {
-        nArray.add(int.parse(s));
-      }
+      List<int> nArray = input2.map(int.parse).toList();
       // 이진 탐색을 위한 사전 정렬
       nArray.sort();
 
@@ -24,12 +21,12 @@ void main(List<String> arguments) {
         // 견적서 전체 부품 번호 공백 구분하여 입력
         var input4 = stdin.readLineSync()?.split(' ');
         if (input4 != null) {
-          var mArray = <int>[];
-          for (String s in input4) {
-            mArray.add(int.parse(s));
-          }
+          List<int> mArray = input4.map(int.parse).toList();
           // 이진 탐색을 위한 사전 정렬
           mArray.sort();
+
+          print('nArray => $nArray');
+          print('mArray => $mArray');
 
           for (int target in mArray) {
             var result = binarySearch(nArray, target, 0, n - 1);
@@ -49,6 +46,8 @@ void main(List<String> arguments) {
 int? binarySearch(List<int> array, int target, int start, int end) {
   while (start <= end) {
     var mid = (start + end) ~/ 2;
+    print(
+        'start=${array[start]}, mid=${array[mid.toInt()]}, end=${array[end]}');
     if (array[mid] == target) {
       // 찾은 경우 중간점 인덱스 반환
       return mid;
@@ -62,3 +61,24 @@ int? binarySearch(List<int> array, int target, int start, int end) {
   }
   return null;
 }
+/*
+입력
+5
+8 3 7 9 2
+3
+5 7 9
+
+출력
+nArray => [2, 3, 7, 8, 9]
+mArray => [5, 7, 9]
+start=2, mid=7, end=9
+start=2, mid=2, end=3
+start=3, mid=3, end=3
+no 
+start=2, mid=7, end=9
+yes 
+start=2, mid=7, end=9
+start=8, mid=8, end=9
+start=9, mid=9, end=9
+yes 
+*/

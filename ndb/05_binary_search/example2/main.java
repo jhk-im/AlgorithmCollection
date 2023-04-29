@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,14 +12,8 @@ public class Main {
             int n = Integer.parseInt(input[0]);
             int target = Integer.parseInt(input[1]);
 
-            BufferedReader br2 = new BufferedReader(new InputStreamReader(System.in));
-            String[] input2 = br2.readLine().split(" ");
-            int[] array = new int[n];
-            int count = 0;
-            for (String s : input2) {
-                array[count] = Integer.parseInt(s);
-                count++;
-            }
+            String[] input2 = br.readLine().split(" ");
+            int[] array = Arrays.stream(input2).mapToInt(Integer::parseInt).toArray();
 
             Object result = binarySearch(array, target, 0, n - 1);
             if (result == null) {
@@ -37,6 +32,7 @@ public class Main {
             return null;
         }
         int mid = (start + end) / 2;
+        System.out.println("start=" + array[start] + ", " + "mid=" + array[mid] + ", " + "end=" + array[end] + ", ");
         if (array[mid] == target) { // 중간점 인덱스가 찾는 원소인 경우 반환
             return mid;
         } else if (array[mid] > target) { // 중간점 보다 찾는 원소가 작은 경우 왼쪽 확인
@@ -62,3 +58,14 @@ public class Main {
         return null;
     }
 }
+/*
+입력
+10 4
+0 2 4 6 8 10 12 14 16 18
+
+출력
+start=0, mid=8, end=18, 
+start=0, mid=2, end=6, 
+start=4, mid=4, end=6, 
+3
+*/

@@ -9,12 +9,9 @@ void main(List<String> arguments) {
 
     var input2 = stdin.readLineSync()?.split(' ');
     if (input2 != null) {
-      var intArray = <int>[];
-      for (String s in input2) {
-        intArray.add(int.parse(s));
-      }
+      List<int> array = input2.map(int.parse).toList();
 
-      var result = binarySearch(intArray, target, 0, n + 1);
+      var result = binarySearch(array, target, 0, n - 1);
       if (result == null) {
         print("원소가 존재하지 않음");
       } else {
@@ -30,6 +27,7 @@ int? binarySearch(List<int> array, int target, int start, int end) {
     return null;
   }
   var mid = (start + end) / 2;
+  print('start=${array[start]}, mid=${array[mid.toInt()]}, end=${array[end]}');
   if (array[mid.toInt()] == target) {
     // 중간점 인덱스가 찾는 원소인 경우 반환
     return mid.toInt();
@@ -59,3 +57,15 @@ int? binarySearchWithWhile(List<int> array, int target, int start, int end) {
   }
   return null;
 }
+/*
+입력
+10 4
+0 2 4 6 8 10 12 14 16 18
+
+출력
+start=0, mid=8, end=18
+start=0, mid=2, end=6
+start=4, mid=4, end=6
+3
+*/
+

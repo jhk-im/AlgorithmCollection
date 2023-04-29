@@ -33,3 +33,10 @@ public class Main {
         return 0;
     }
 }
+/*
+생성할 원소 개수, 찾을 문자열 입력. ex)3 Kim
+3 kim
+원소 개수만큼 문자열 입력. ex)Lee Kim Park
+kim lee park
+1
+*/
