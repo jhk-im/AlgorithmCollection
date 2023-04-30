@@ -59,7 +59,7 @@
       * 일반적으로 A'와 B'중 더 작은 원소가 부모 노드가 되도록 구현
   * 모든 union 연산을 처리할 때까지 반복
 
-`예시 - exaple1`
+### [example1](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/08_graph/example1)
 
 * 전체 집합 {1, 2, 3, 4, 5, 6}
 * union 연산
@@ -201,7 +201,7 @@ flowchart LR
     * 루트 노드가 서로 같다면 사이클 발생
   * 모든 간선에 대하여 과정 반복
 
-`예시 - exaple2`
+### [example2](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/08_graph/example2)
 
 ```txt
 1.
@@ -286,7 +286,7 @@ classDiagram
     * 사이클이 발생하는 경우만 최소 신장트리에 포함
   * 과정 반복
 
-`예시 - exaple3`
+### [example3](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/08_graph/example3)
 
 ```txt
 1.
@@ -436,7 +436,7 @@ classDiagram
 * 일반적으로 위상 정렬 문제는 사이클이 발생하지 않음을 명시함
   * 사이클 발생 고려하지 않고 해결
 
-`예시 - example4`
+### [example4](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/08_graph/example4)
 
 ```txt
 1.
