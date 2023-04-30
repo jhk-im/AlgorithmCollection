@@ -15,7 +15,6 @@ public class Main {
 
             // 다나믹 프로그래밍 바텀업
             for (int i = 2; i < x + 1; i++){
-                System.out.println(" ");
                 System.out.println("---");
                 System.out.print("i" + i);
                 // 현재의 수에서 1을 빼는 경우
@@ -36,9 +35,68 @@ public class Main {
                     d[i] = Math.min(d[i], d[i / 5] + 1);
                     System.out.print(" d" + d[i]);
                 }
+                System.out.println(" ");
             }
+            System.out.println("결과=" + d[x]);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 }
+/*
+입력
+26
+
+출력
+---
+i2 a1 b1
+---
+i3 a2 c1
+---
+i4 a2 b2
+---
+i5 a3 d1
+---
+i6 a2 b2 c2
+---
+i7 a3
+---
+i8 a4 b3
+---
+i9 a4 c2
+---
+i10 a3 b2 d2
+---
+i11 a3
+---
+i12 a4 b3 c3
+---
+i13 a4
+---
+i14 a5 b4
+---
+i15 a5 c2 d2
+---
+i16 a3 b3
+---
+i17 a4
+---
+i18 a5 b3 c3
+---
+i19 a4
+---
+i20 a5 b3 d3
+---
+i21 a4 c4
+---
+i22 a5 b4
+---
+i23 a5
+---
+i24 a6 b4 c4
+---
+i25 a5 d2
+---
+i26 a3 b3
+결과=3
+*/

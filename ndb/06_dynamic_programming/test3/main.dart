@@ -24,3 +24,14 @@ void main(List<String> arguments) {
     }
   }
 }
+/*
+입력
+3
+
+출력
+---
+i -> 3
+d1 -> 3
+d2 -> 1
+d[i] -> 5
+*/
