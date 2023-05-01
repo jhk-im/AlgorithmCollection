@@ -7,49 +7,29 @@ public class Main {
     public static void main(String[] args) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
-            // n 입력받음
-            String input = br.readLine();
-            int n = Integer.parseInt(input);
-            Integer[] array = new Integer[n];
-            int arrayCount = 0;
-            // 공포도 리스트 입력 받음
-            while (arrayCount != n) {
-                String[] input2 = br.readLine().split(" ");
-                arrayCount = input2.length;
-                if (arrayCount != n) {
-                    System.out.println("재입력");
-                } else {
-                    int count = 0;
-                    for (String s : input2){
-                        array[count] = Integer.parseInt(s);
-                        count++;
-                    }
-                    Arrays.sort(array, Collections.reverseOrder());
-                    System.out.println("공포도 리스트 내림차순 정렬 => " + Arrays.toString(array));
+            // s 입력받음
+            String[] input = br.readLine().split("");
+            int[] array = new int[input.length];
+            int count = 0;
+            for (String s : input) {
+                if (s.length() > 0) {
+                    array[count] = Integer.parseInt(s);
+                    count++;
                 }
             }
-            // 결과확인
+            Arrays.sort(array);
+            System.out.println("숫자 리스트 오름차순 정렬 => " + Arrays.toString(array));
             int result = 0;
-            int arraySize = n;
-            int nextIndex = 0;
-            while (nextIndex < n) {
-                int limit = array[nextIndex]; // 3
+            for (int i : array) {
                 System.out.println("---");
-                System.out.println("limit => " + limit);
-                if (limit == 0) {
-                    limit = 1;
-                }
-                if (limit <= arraySize) {
-                    arraySize -= limit; // 2
-                    nextIndex += limit; // 3
-                    result += 1;
+                if (result == 0 || i < 2) {
+                    System.out.println("더하기");
+                    result += i;
                 } else {
-                    arraySize -= 1;
-                    nextIndex += 1;
+                    System.out.println("곱하기");
+                    result *= i;
                 }
-                System.out.println("arraySize => " + arraySize);
-                System.out.println("nextIndex => " + nextIndex);
-                System.out.println("result => " + result);
+                System.out.println(result);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -58,19 +38,23 @@ public class Main {
 }
 /*
 입력
-5
-2 3 1 2 2
+02984
 
 출력
-공포도 리스트 내림차순 정렬 => [3, 2, 2, 2, 1]
+숫자 리스트 오름차순 정렬 => [0, 2, 4, 8, 9]
 ---
-limit => 3
-arraySize => 2
-nextIndex => 3
-result => 1
+더하기
+0
 ---
-limit => 2
-arraySize => 0
-nextIndex => 5
-result => 2
+더하기
+2
+---
+곱하기
+8
+---
+곱하기
+64
+---
+곱하기
+576
 */
