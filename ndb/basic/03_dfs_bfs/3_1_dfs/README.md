@@ -15,7 +15,7 @@ DFS는 특정한 경로로 탐색하다가 특정한 상황에서 최대한 깊�
 
 > DFS는 순서와 상관없이 처리해도 되지만, 코딩 테스트에선 번호가 낮은 순서부터 처리하도록 명시하는 경우가 종종 있다.
 
-### [example1](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/03_dfs_bfs/3_1_dfs/example1)
+### [example1](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/basic/03_dfs_bfs/3_1_dfs/example1)
 
 ```txt
 1. 시작 노드 Push(1)

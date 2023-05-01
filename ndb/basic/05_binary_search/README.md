@@ -20,7 +20,7 @@
 * 연산 횟수 = O(logN)
 * 재귀함수 or 반복문을 이용하여 구현
 
-### [example2](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/05_binary_search/example2)
+### [example2](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/basic/05_binary_search/example2)
 
 ```txt
 * 8개의 데이터 중 값이 4인 원소를 찾는 예시

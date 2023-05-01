@@ -81,4 +81,4 @@ print(fibo(4)) # 3출력
 
 `주어진 문제가 다이나믹 프로그래밍 유형임을 파악하는 것이 중요하다.`
 
-### [example1](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/06_dynamic_programming/example1)
+### [example1](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/basic/06_dynamic_programming/example1)

@@ -222,4 +222,4 @@ Part1
 * 동일한 값을 가지는 데이터가 여러 개 등장할 때 적합
 * 데이터 크기가 한정되어 있고 중복이 있을 수록 유리함
 
-### [example1](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/04_sorting/%08example1)
+### [example1](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/basic/04_sorting/%08example1)

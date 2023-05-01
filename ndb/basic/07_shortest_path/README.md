@@ -31,7 +31,7 @@
 
 ---
 
-### [example1](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/07_shortest_path/example1)
+### [example1](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/basic/07_shortest_path/example1)
 
 `1번 노드에서 다른 모든 노드로 가는 최단 경로`
 
@@ -188,7 +188,7 @@ stateDiagram-v2
 
 ---
 
-### [example2](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/07_shortest_path/example2)
+### [example2](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/basic/07_shortest_path/example2)
 
 `현재 가장 가까운 노드를 저장하기 위한 목적으로 우선순위 큐를 사용`
 
@@ -342,7 +342,7 @@ stateDiagram-v2
   * a에서 b로 가는 최소비용과 a에서 k를 거쳐 b로 가는 비용을 비교하여 더 작은 값으로 갱신
 * 전체적으로 3중 반복문 이용
 
-### [example3](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/07_shortest_path/example3)
+### [example3](https://github.com/jhk-im/algorithm-collection/tree/main/ndb/basic/07_shortest_path/example3)
 
 ```mermaid
 stateDiagram-v2
