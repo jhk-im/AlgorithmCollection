@@ -10,12 +10,11 @@ void main(List<String> arguments) {
         array.add(int.parse(input[i]));
       }
     }
-    array.sort();
-    print('숫자 리스트 오름차순 정렬 -> $array');
+    print('숫자 리스트 -> $array');
     int result = 0;
     for (int i in array) {
       print('---');
-      if (result == 0 || i < 2) {
+      if (result <= 1 || i <= 1) {
         print('더하기');
         result += i;
       } else {
@@ -31,7 +30,7 @@ void main(List<String> arguments) {
 02984
 
 출력
-숫자 리스트 오름차순 정렬 -> [0, 2, 4, 8, 9]
+숫자 리스트 -> [0, 2, 9, 8, 4]
 ---
 더하기
 0

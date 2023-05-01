@@ -2,9 +2,9 @@ import 'dart:io';
 
 void main(List<String> arguments) {
   // n 입력받음
-  List<String>? input1 = stdin.readLineSync()?.split(" ");
+  String? input1 = stdin.readLineSync();
   if (input1 != null) {
-    final n = int.parse(input1[0]);
+    final n = int.parse(input1);
     List<int> array = [];
     // 공포도 리스트 입력 받음
     while (array.length != n) {
@@ -15,7 +15,6 @@ void main(List<String> arguments) {
           print('재입력');
           array.clear();
         } else {
-          // 내림차순으로 정렬
           array.sort((a, b) => b.compareTo(a));
           print('공포도 리스트 내림차순 정렬 => $array');
         }
