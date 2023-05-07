@@ -1,3 +1,7 @@
+/// List<List<int>>
+/// contains(), remove() 오동작 확인해봐야함
+///
+///
 void main(List<String> arguments) {
   Solution solution = Solution();
   print(solution.solution(5, [
@@ -30,11 +34,17 @@ class Solution {
       print('좌표 = ($x, $y)');
       print('작업물은 기둥 = ${stuff == 0}');
       print('작업물 추가 = ${operate == 1}');
+      print(answer);
       if (operate == 0) {
         // 작업물 삭제
         // 우선삭제
         List<int> removeArray = [x, y, stuff];
-        answer.remove(removeArray);
+        for (var element in answer) {
+          if (element.toString() == removeArray.toString()) {
+            answer.remove(element);
+            break;
+          }
+        }
         // 삭제 가능한지 확인
         if (!operatePossible(answer)) {
           // 불가능한 경우 다시 추가
@@ -46,14 +56,14 @@ class Solution {
         print(answer);
       }
       if (operate == 1) {
-        // 작업물 삭제
-        // 우선 추가
+        // 작업물 설치
+        // 우선 설치
         List<int> addArray = [x, y, stuff];
         answer.add(addArray);
         // 추가 가능한지 확인
         if (!operatePossible(answer)) {
           // 불가능한 경우 다시 삭제
-          answer.remove(addArray);
+          answer.removeLast();
           print('add not possible');
         } else {
           print('add possible');
@@ -104,10 +114,17 @@ class Solution {
         print('pilar -> $pilar');
         print('beam1 -> $beam1');
         print('beam2 -> $beam2');
-        if (isOnFloor ||
-            answer.contains(pilar) ||
-            answer.contains(beam1) ||
-            answer.contains(beam2)) {
+        bool continueCheck = false;
+        for (var element in answer) {
+          if (isOnFloor ||
+              element.toString() == pilar.toString() ||
+              element.toString() == beam1.toString() ||
+              element.toString() == beam2.toString()) {
+            continueCheck = true;
+            break;
+          }
+        }
+        if (continueCheck) {
           continue;
         }
         return false;
@@ -121,13 +138,24 @@ class Solution {
         List<int> beam2 = [x + 1, y, 1];
         print('보');
         print('pilar1 -> $pilar1');
-        print('pilar1 -> ${answer.contains([x, y - 1, 0])}');
         print('pilar2 -> $pilar2');
         print('beam1 -> $beam1');
         print('beam2 -> $beam2');
-        if (answer.contains(pilar1) ||
-            answer.contains(pilar2) ||
-            answer.contains(beam1) && answer.contains(beam2)) {
+        bool continueCheck = false;
+        int beamCheck = 0;
+        for (var element in answer) {
+          if (element.toString() == beam1.toString() ||
+              element.toString() == beam2.toString()) {
+            beamCheck++;
+          }
+          if (element.toString() == pilar1.toString() ||
+              element.toString() == pilar2.toString() ||
+              beamCheck == 2) {
+            continueCheck = true;
+            break;
+          }
+        }
+        if (continueCheck) {
           continue;
         }
         return false;
@@ -136,5 +164,357 @@ class Solution {
     return true;
   }
 }
+/*
+입력
+입력
+n = 5
+build_frame = [[0,0,0,1],[2,0,0,1],[4,0,0,1],[0,1,1,1],[1,1,1,1],[2,1,1,1],[3,1,1,1],[2,0,0,0],[1,1,1,0],[2,2,0,1]]
 
-// list in list contains 동작 오류 해결해야 함
+과정
+---build frame---
+[[0, 0, 0, 1], [2, 0, 0, 1], [4, 0, 0, 1], [0, 1, 1, 1], [1, 1, 1, 1], [2, 1, 1, 1], [3, 1, 1, 1], [2, 0, 0, 0], [1, 1, 1, 0], [2, 2, 0, 1]]
+---build 1---
+좌표 = (0, 0)
+작업물은 기둥 = true
+작업물 추가 = true
+[]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [0, -1, 0]
+beam1 -> [-1, 0, 1]
+beam2 -> [0, 0, 1]
+add possible
+[[0, 0, 0]]
+---build 2---
+좌표 = (2, 0)
+작업물은 기둥 = true
+작업물 추가 = true
+[[0, 0, 0]]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [0, -1, 0]
+beam1 -> [-1, 0, 1]
+beam2 -> [0, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [2, -1, 0]
+beam1 -> [1, 0, 1]
+beam2 -> [2, 0, 1]
+add possible
+[[0, 0, 0], [2, 0, 0]]
+---build 3---
+좌표 = (4, 0)
+작업물은 기둥 = true
+작업물 추가 = true
+[[0, 0, 0], [2, 0, 0]]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [0, -1, 0]
+beam1 -> [-1, 0, 1]
+beam2 -> [0, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [2, -1, 0]
+beam1 -> [1, 0, 1]
+beam2 -> [2, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [4, -1, 0]
+beam1 -> [3, 0, 1]
+beam2 -> [4, 0, 1]
+add possible
+[[0, 0, 0], [2, 0, 0], [4, 0, 0]]
+---build 4---
+좌표 = (0, 1)
+작업물은 기둥 = false
+작업물 추가 = true
+[[0, 0, 0], [2, 0, 0], [4, 0, 0]]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [0, -1, 0]
+beam1 -> [-1, 0, 1]
+beam2 -> [0, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [2, -1, 0]
+beam1 -> [1, 0, 1]
+beam2 -> [2, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [4, -1, 0]
+beam1 -> [3, 0, 1]
+beam2 -> [4, 0, 1]
+possible()
+보
+pilar1 -> [0, 0, 0]
+pilar2 -> [1, 0, 0]
+beam1 -> [-1, 1, 1]
+beam2 -> [1, 1, 1]
+add possible
+[[0, 0, 0], [2, 0, 0], [4, 0, 0], [0, 1, 1]]
+---build 5---
+좌표 = (1, 1)
+작업물은 기둥 = false
+작업물 추가 = true
+[[0, 0, 0], [2, 0, 0], [4, 0, 0], [0, 1, 1]]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [0, -1, 0]
+beam1 -> [-1, 0, 1]
+beam2 -> [0, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [2, -1, 0]
+beam1 -> [1, 0, 1]
+beam2 -> [2, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [4, -1, 0]
+beam1 -> [3, 0, 1]
+beam2 -> [4, 0, 1]
+possible()
+보
+pilar1 -> [0, 0, 0]
+pilar2 -> [1, 0, 0]
+beam1 -> [-1, 1, 1]
+beam2 -> [1, 1, 1]
+possible()
+보
+pilar1 -> [1, 0, 0]
+pilar2 -> [2, 0, 0]
+beam1 -> [0, 1, 1]
+beam2 -> [2, 1, 1]
+add possible
+[[0, 0, 0], [2, 0, 0], [4, 0, 0], [0, 1, 1], [1, 1, 1]]
+---build 6---
+좌표 = (2, 1)
+작업물은 기둥 = false
+작업물 추가 = true
+[[0, 0, 0], [2, 0, 0], [4, 0, 0], [0, 1, 1], [1, 1, 1]]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [0, -1, 0]
+beam1 -> [-1, 0, 1]
+beam2 -> [0, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [2, -1, 0]
+beam1 -> [1, 0, 1]
+beam2 -> [2, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [4, -1, 0]
+beam1 -> [3, 0, 1]
+beam2 -> [4, 0, 1]
+possible()
+보
+pilar1 -> [0, 0, 0]
+pilar2 -> [1, 0, 0]
+beam1 -> [-1, 1, 1]
+beam2 -> [1, 1, 1]
+possible()
+보
+pilar1 -> [1, 0, 0]
+pilar2 -> [2, 0, 0]
+beam1 -> [0, 1, 1]
+beam2 -> [2, 1, 1]
+possible()
+보
+pilar1 -> [2, 0, 0]
+pilar2 -> [3, 0, 0]
+beam1 -> [1, 1, 1]
+beam2 -> [3, 1, 1]
+add possible
+[[0, 0, 0], [2, 0, 0], [4, 0, 0], [0, 1, 1], [1, 1, 1], [2, 1, 1]]
+---build 7---
+좌표 = (3, 1)
+작업물은 기둥 = false
+작업물 추가 = true
+[[0, 0, 0], [2, 0, 0], [4, 0, 0], [0, 1, 1], [1, 1, 1], [2, 1, 1]]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [0, -1, 0]
+beam1 -> [-1, 0, 1]
+beam2 -> [0, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [2, -1, 0]
+beam1 -> [1, 0, 1]
+beam2 -> [2, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [4, -1, 0]
+beam1 -> [3, 0, 1]
+beam2 -> [4, 0, 1]
+possible()
+보
+pilar1 -> [0, 0, 0]
+pilar2 -> [1, 0, 0]
+beam1 -> [-1, 1, 1]
+beam2 -> [1, 1, 1]
+possible()
+보
+pilar1 -> [1, 0, 0]
+pilar2 -> [2, 0, 0]
+beam1 -> [0, 1, 1]
+beam2 -> [2, 1, 1]
+possible()
+보
+pilar1 -> [2, 0, 0]
+pilar2 -> [3, 0, 0]
+beam1 -> [1, 1, 1]
+beam2 -> [3, 1, 1]
+possible()
+보
+pilar1 -> [3, 0, 0]
+pilar2 -> [4, 0, 0]
+beam1 -> [2, 1, 1]
+beam2 -> [4, 1, 1]
+add possible
+[[0, 0, 0], [2, 0, 0], [4, 0, 0], [0, 1, 1], [1, 1, 1], [2, 1, 1], [3, 1, 1]]
+---build 8---
+좌표 = (2, 0)
+작업물은 기둥 = true
+작업물 추가 = false
+[[0, 0, 0], [2, 0, 0], [4, 0, 0], [0, 1, 1], [1, 1, 1], [2, 1, 1], [3, 1, 1]]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [0, -1, 0]
+beam1 -> [-1, 0, 1]
+beam2 -> [0, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [4, -1, 0]
+beam1 -> [3, 0, 1]
+beam2 -> [4, 0, 1]
+possible()
+보
+pilar1 -> [0, 0, 0]
+pilar2 -> [1, 0, 0]
+beam1 -> [-1, 1, 1]
+beam2 -> [1, 1, 1]
+possible()
+보
+pilar1 -> [1, 0, 0]
+pilar2 -> [2, 0, 0]
+beam1 -> [0, 1, 1]
+beam2 -> [2, 1, 1]
+possible()
+보
+pilar1 -> [2, 0, 0]
+pilar2 -> [3, 0, 0]
+beam1 -> [1, 1, 1]
+beam2 -> [3, 1, 1]
+possible()
+보
+pilar1 -> [3, 0, 0]
+pilar2 -> [4, 0, 0]
+beam1 -> [2, 1, 1]
+beam2 -> [4, 1, 1]
+delete possible
+[[0, 0, 0], [4, 0, 0], [0, 1, 1], [1, 1, 1], [2, 1, 1], [3, 1, 1]]
+---build 9---
+좌표 = (1, 1)
+작업물은 기둥 = false
+작업물 추가 = false
+[[0, 0, 0], [4, 0, 0], [0, 1, 1], [1, 1, 1], [2, 1, 1], [3, 1, 1]]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [0, -1, 0]
+beam1 -> [-1, 0, 1]
+beam2 -> [0, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [4, -1, 0]
+beam1 -> [3, 0, 1]
+beam2 -> [4, 0, 1]
+possible()
+보
+pilar1 -> [0, 0, 0]
+pilar2 -> [1, 0, 0]
+beam1 -> [-1, 1, 1]
+beam2 -> [1, 1, 1]
+possible()
+보
+pilar1 -> [2, 0, 0]
+pilar2 -> [3, 0, 0]
+beam1 -> [1, 1, 1]
+beam2 -> [3, 1, 1]
+delete not possible
+[[0, 0, 0], [4, 0, 0], [0, 1, 1], [2, 1, 1], [3, 1, 1], [1, 1, 1]]
+---build 10---
+좌표 = (2, 2)
+작업물은 기둥 = true
+작업물 추가 = true
+[[0, 0, 0], [4, 0, 0], [0, 1, 1], [2, 1, 1], [3, 1, 1], [1, 1, 1]]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [0, -1, 0]
+beam1 -> [-1, 0, 1]
+beam2 -> [0, 0, 1]
+possible()
+기둥
+isOnFloor -> true
+pilar -> [4, -1, 0]
+beam1 -> [3, 0, 1]
+beam2 -> [4, 0, 1]
+possible()
+보
+pilar1 -> [0, 0, 0]
+pilar2 -> [1, 0, 0]
+beam1 -> [-1, 1, 1]
+beam2 -> [1, 1, 1]
+possible()
+보
+pilar1 -> [2, 0, 0]
+pilar2 -> [3, 0, 0]
+beam1 -> [1, 1, 1]
+beam2 -> [3, 1, 1]
+possible()
+보
+pilar1 -> [3, 0, 0]
+pilar2 -> [4, 0, 0]
+beam1 -> [2, 1, 1]
+beam2 -> [4, 1, 1]
+possible()
+보
+pilar1 -> [1, 0, 0]
+pilar2 -> [2, 0, 0]
+beam1 -> [0, 1, 1]
+beam2 -> [2, 1, 1]
+possible()
+기둥
+isOnFloor -> false
+pilar -> [2, 1, 0]
+beam1 -> [1, 2, 1]
+beam2 -> [2, 2, 1]
+add not possible
+[[0, 0, 0], [4, 0, 0], [0, 1, 1], [2, 1, 1], [3, 1, 1], [1, 1, 1]]
+---sort---
+
+출력
+[[0, 0, 0], [0, 1, 1], [1, 1, 1], [2, 1, 1], [3, 1, 1], [4, 0, 0]]
+*/
