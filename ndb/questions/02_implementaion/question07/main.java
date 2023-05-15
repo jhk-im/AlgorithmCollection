@@ -53,7 +53,7 @@ public class Main {
             throw new RuntimeException(e);
         }
     }
-    // 백트래킹 순열 조합
+    // 백트래킹 조합
     static void combination(
             ArrayList<int[]> chicken,
             ArrayList<ArrayList<int[]>> candidates,

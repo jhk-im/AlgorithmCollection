@@ -49,7 +49,7 @@ void main(List<String> arguments) {
   }
 }
 
-// 백트래킹 순열 조합
+// 백트래킹 조합
 void combination(List<List<int>> chicken, List<List<List<int>>> candidates,
     List<bool> visited, int start, int m) {
   if (m == 0) {
