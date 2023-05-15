@@ -18,7 +18,7 @@ class Solution {
     print('n = $n');
     print('weak = $weak');
     print('dist = $dist');
-    // 작어자 경우의 수 순열 리스트 생성
+    // 작업자 경우의 수 순열 리스트 생성
     List<List<int>> permutations = [];
     permutation(dist, List.filled(dist.length, 0),
         List.filled(dist.length, false), permutations, 0);
