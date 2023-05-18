@@ -51,7 +51,18 @@ public class Main {
                 System.out.println("빈칸조합 = " + Arrays.deepToString(candidate.toArray()));
                 System.out.println("default data = " + Arrays.deepToString(defaultData));
                 System.out.println("update data = " + Arrays.deepToString(updateData.toArray()));
-                checkVirus();
+                // 바이러스 전파 진행
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < m; j++) {
+                        if (updateData.get(i)[j] == 2) {
+                            virus(i, j);
+                        }
+                    }
+                }
+                System.out.println("checkVirus() = " + Arrays.deepToString(updateData.toArray()));
+                System.out.println("getScore() = " + getEmptyCount());
+                // 안전영역 최댓값 계산
+                result = Math.max(result, getEmptyCount());
             }
             System.out.println(" ");
             System.out.println("출력");
@@ -91,40 +102,31 @@ public class Main {
         }
     }
     // 깊이 우선 탐색(DFS)을 활용하여 바이러스가 사방에 퍼지도록 하는 함수
-    static void checkVirus() {
-        // 바이러스 전파 진행
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (updateData.get(i)[j] == 2) {
-                    for (int v = 0; v < 4; v++) {
-                        int nx = i + dx[v];
-                        int ny = j + dy[v];
-                        // 상, 하, 좌, 우 중에서 바이러스가 퍼질 수 있는 경우
-                        if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
-                            if (updateData.get(nx)[ny] == 0) {
-                                updateData.get(nx)[ny] = 2;
-                            }
-                        }
-                    }
+    static void virus(int x, int y) {
+        for (int v = 0; v < 4; v++) {
+            int nx = x + dx[v];
+            int ny = y + dy[v];
+            // 상, 하, 좌, 우 중에서 바이러스가 퍼질 수 있는 경우
+            if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
+                if (updateData.get(nx)[ny] == 0) {
+                    // 바이러스 배치하고 재귀 수행
+                    updateData.get(nx)[ny] = 2;
+                    virus(nx, ny);
                 }
             }
         }
-        System.out.println("checkVirus() = " + Arrays.deepToString(updateData.toArray()));
-        System.out.println("getScore() = " + getScore());
-        // 안전영역 최댓값 계산
-        result = Math.max(result, getScore());
     }
-    // 벽을 설치한 맵의 안전영역 크기 계산
-    static int getScore() {
-        int score = 0;
+    // 벽을 설치한 맵의 안전 영역(빈칸) 크기
+    static int getEmptyCount() {
+        int emptyCount = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (updateData.get(i)[j] == 0) {
-                    score += 1;
+                    emptyCount += 1;
                 }
             }
         }
-        return score;
+        return emptyCount;
     }
 }
 /*

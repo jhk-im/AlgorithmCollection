@@ -49,7 +49,18 @@ void main(List<String> arguments) {
       print('빈칸조합 = $candidate');
       print('default data = $defaultData');
       print('update data = $updateData');
-      checkVirus();
+      // 바이러스 전파 진행
+      for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+          if (updateData[i][j] == 2) {
+            virus(i, j);
+          }
+        }
+      }
+      print('checkVirus() = $updateData');
+      print('getScore() = ${getScore()}');
+      // 안전영역 최댓값 계산
+      result = max(result, getScore());
     }
     print(' ');
     print('출력');
@@ -88,28 +99,18 @@ void resetMap() {
 }
 
 // 깊이 우선 탐색(DFS)을 활용하여 바이러스가 사방에 퍼지도록 하는 함수
-void checkVirus() {
-  // 바이러스 전파 진행
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++) {
-      if (updateData[i][j] == 2) {
-        for (int v = 0; v < 4; v++) {
-          int nx = i + dx[v];
-          int ny = j + dy[v];
-          // 상, 하, 좌, 우 중에서 바이러스가 퍼질 수 있는 경우
-          if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
-            if (updateData[nx][ny] == 0) {
-              updateData[nx][ny] = 2;
-            }
-          }
-        }
+void virus(int x, int y) {
+  for (int v = 0; v < 4; v++) {
+    int nx = x + dx[v];
+    int ny = y + dy[v];
+    // 상, 하, 좌, 우 중에서 바이러스가 퍼질 수 있는 경우
+    if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
+      if (updateData[nx][ny] == 0) {
+        updateData[nx][ny] = 2;
+        virus(nx, ny);
       }
     }
   }
-  print('checkVirus() = $updateData');
-  print('getScore() = ${getScore()}');
-  // 안전영역 최댓값 계산
-  result = max(result, getScore());
 }
 
 // 벽을 설치한 맵의 안전영역 크기 계산
@@ -130,7 +131,7 @@ int getScore() {
 1 0 1
 2 0 0
 0 0 1
- 
+
 과정
 ---빈칸 조합 리스트 생성
 [[0, 1], [1, 1], [1, 2]]
@@ -143,77 +144,77 @@ int getScore() {
 [[1, 1], [1, 2], [2, 1]]
 [[1, 1], [2, 0], [2, 1]]
 [[1, 2], [2, 0], [2, 1]]
- 
+
 ---벽추가---
 빈칸조합 = [[0, 1], [1, 1], [1, 2]]
 default data = [[1, 0, 1], [2, 0, 0], [0, 0, 1]]
 update data = [[1, 1, 1], [2, 1, 1], [0, 0, 1]]
 checkVirus() = [[1, 1, 1], [2, 1, 1], [2, 2, 1]]
 getScore() = 0
- 
+
 ---벽추가---
 빈칸조합 = [[0, 1], [1, 1], [2, 0]]
 default data = [[1, 0, 1], [2, 0, 0], [0, 0, 1]]
 update data = [[1, 1, 1], [2, 1, 0], [1, 0, 1]]
 checkVirus() = [[1, 1, 1], [2, 1, 0], [1, 0, 1]]
 getScore() = 2
- 
+
 ---벽추가---
 빈칸조합 = [[0, 1], [1, 1], [2, 1]]
 default data = [[1, 0, 1], [2, 0, 0], [0, 0, 1]]
 update data = [[1, 1, 1], [2, 1, 0], [0, 1, 1]]
 checkVirus() = [[1, 1, 1], [2, 1, 0], [2, 1, 1]]
 getScore() = 1
- 
+
 ---벽추가---
 빈칸조합 = [[0, 1], [1, 2], [2, 0]]
 default data = [[1, 0, 1], [2, 0, 0], [0, 0, 1]]
 update data = [[1, 1, 1], [2, 0, 1], [1, 0, 1]]
 checkVirus() = [[1, 1, 1], [2, 2, 1], [1, 2, 1]]
 getScore() = 0
- 
+
 ---벽추가---
 빈칸조합 = [[0, 1], [1, 2], [2, 1]]
 default data = [[1, 0, 1], [2, 0, 0], [0, 0, 1]]
 update data = [[1, 1, 1], [2, 0, 1], [0, 1, 1]]
 checkVirus() = [[1, 1, 1], [2, 2, 1], [2, 1, 1]]
 getScore() = 0
- 
+
 ---벽추가---
 빈칸조합 = [[0, 1], [2, 0], [2, 1]]
 default data = [[1, 0, 1], [2, 0, 0], [0, 0, 1]]
 update data = [[1, 1, 1], [2, 0, 0], [1, 1, 1]]
 checkVirus() = [[1, 1, 1], [2, 2, 2], [1, 1, 1]]
 getScore() = 0
- 
+
 ---벽추가---
 빈칸조합 = [[1, 1], [1, 2], [2, 0]]
 default data = [[1, 0, 1], [2, 0, 0], [0, 0, 1]]
 update data = [[1, 0, 1], [2, 1, 1], [1, 0, 1]]
 checkVirus() = [[1, 0, 1], [2, 1, 1], [1, 0, 1]]
 getScore() = 2
- 
+
 ---벽추가---
 빈칸조합 = [[1, 1], [1, 2], [2, 1]]
 default data = [[1, 0, 1], [2, 0, 0], [0, 0, 1]]
 update data = [[1, 0, 1], [2, 1, 1], [0, 1, 1]]
 checkVirus() = [[1, 0, 1], [2, 1, 1], [2, 1, 1]]
 getScore() = 1
- 
+
 ---벽추가---
 빈칸조합 = [[1, 1], [2, 0], [2, 1]]
 default data = [[1, 0, 1], [2, 0, 0], [0, 0, 1]]
 update data = [[1, 0, 1], [2, 1, 0], [1, 1, 1]]
 checkVirus() = [[1, 0, 1], [2, 1, 0], [1, 1, 1]]
 getScore() = 2
- 
+
 ---벽추가---
 빈칸조합 = [[1, 2], [2, 0], [2, 1]]
 default data = [[1, 0, 1], [2, 0, 0], [0, 0, 1]]
 update data = [[1, 0, 1], [2, 0, 1], [1, 1, 1]]
 checkVirus() = [[1, 2, 1], [2, 2, 1], [1, 1, 1]]
 getScore() = 0
- 
+
 출력
 2
 */
