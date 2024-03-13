@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+// 권장 시간 복잡도 O(NlogN)
 // 제약 조건에 따라 같은 문제도 난이도가 달라질 수 있음
 public class Main {
 
@@ -39,4 +40,9 @@ public class Main {
         System.out.println((end - start) / 1000.0 + "초");
         System.out.println(Arrays.equals(bubble, sort)); // 0.002초
     }
+
+    // 시간복잡도 분석
+    // Arrays.sort -> O(NlogN)
+    // bubbleSort -> O(N²)
+    // O(NlogN)
 }
