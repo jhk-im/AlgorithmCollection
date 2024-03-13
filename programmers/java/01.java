@@ -3,12 +3,14 @@ import java.util.Arrays;
 // 제약 조건에 따라 같은 문제도 난이도가 달라질 수 있음
 public class Main {
 
+    // 시간복잡도 O(NlogN)
     public static int[] doSort(int[] org) {
         int[] arr = org.clone(); // 원본 배열의 상태를 유지하면서 새로운 배열을 복사해서 사용해야 하는 상황
-        Arrays.sort(arr); // Dual-Pivot QuickSort or Tim-Sort
+        Arrays.sort(arr); // Dual-Pivot QuickSort or Tim-Sort 
         return arr;
     }
 
+    // 시간복잡도 O(N²)
     public static int[] bubbleSort(int[] org) {
         int[] arr = org.clone(); // 원본 배열의 상태를 유지하면서 새로운 배열을 복사해서 사용해야 하는 상황
         int n = arr.length;
